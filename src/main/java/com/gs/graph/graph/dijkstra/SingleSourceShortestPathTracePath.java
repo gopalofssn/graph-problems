@@ -1,4 +1,4 @@
-package com.gs.graph.dijkstra;
+package com.gs.graph.graph.dijkstra;
 
 import java.util.ArrayList;
 import java.util.Collections;
