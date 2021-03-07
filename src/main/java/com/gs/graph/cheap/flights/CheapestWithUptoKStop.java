@@ -58,7 +58,8 @@ public class CheapestWithUptoKStop {
     Comparator<CityCost> cmp = (a, b) -> a.cost - b.cost;
     PriorityQueue<CityCost> miniHeap = new PriorityQueue<CityCost>(cmp);
     miniHeap.offer(new CityCost(source, 0, -1));
-
+    costMap.put(source, 0);
+    
     while (!miniHeap.isEmpty()) {
 
       CityCost current = miniHeap.poll();
@@ -71,11 +72,10 @@ public class CheapestWithUptoKStop {
       for (CityCost child : graph.getOrDefault(currentCity, Collections.emptyList())) {
         int cost = currentCost + child.cost;
         if (cost < costMap.getOrDefault(child.city, Integer.MAX_VALUE)) {
-          costMap.put(child.city, cost);
+          costMap.put(child.city, cost); 
         }
         miniHeap.offer(new CityCost(child.city, cost, stop + 1));
       }
-
     }
 
     return costMap;

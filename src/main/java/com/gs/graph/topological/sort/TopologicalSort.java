@@ -1,91 +1,63 @@
-package com.gs.topological.sort;
+package com.gs.graph.topological.sort;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-/*
-   Can be performed only on DAG ( directed acyclic graph)
-   
-   E -> F -> K 
-   |    \
-   .     ---------|
-   A -> D -> H -> J -> M
-   .   . \   \
-   |   |  \    \
-   C-> B   G  -> I -> L 
-   
-   
-   Time : ?
-   Space : ? 
-   
-   approach : DFS recurssive
+/**
+ * 
+ * @author Gopal Selvaraj 
+ * Time : O(V+E) 
+ * Space : O(V + E ); 
+ * Approach : Depth first search
  */
 public class TopologicalSort {
 
-	private static char[] topSort(char[][] grid) {
-		Map<Character, List<Character>> graph = new HashMap<>();
-	    buildGraph(grid ,graph);
-		char[] result = new char[numberOfVetices];
-		int count = (numberOfVetices - 1);
-		Set<Character> visited = new HashSet<Character>();
-		for(Map.Entry<Character, List<Character>> entry : graph.entrySet()){
-			char vertex = entry.getKey();
-			if(visited.contains(vertex)) continue;
-			List<Character> visiting = new ArrayList<>();
-			dfs(graph, vertex, visited, visiting);
-			System.out.println("visiting " + visiting);
-			for(char visit : visiting){
-				result[count--] = visit;
-			}
-		}
-		return result;
-	}
+  public char[] topSort(char[][] grid) {
+    Map<Character, List<Character>> graph = buildGraph(grid);
+    LinkedList<Character> topList = new LinkedList<Character>();
+    Set<Character> visited = new HashSet<Character>();
+    for (Map.Entry<Character, List<Character>> entry : graph.entrySet()) {
+      char vertex = entry.getKey();
+      if (visited.contains(vertex)) continue;
+      dfs(graph, vertex, visited, topList);
+    }
+    return convertAndSend(topList);
+  }
 
-	private static void dfs(Map<Character, List<Character>> graph, char src, Set<Character> visited, List<Character> visiting) {
-		if(visited.contains(src)) return;
-		visited.add(src);
-		for(char neighborVertex : graph.getOrDefault(src,  Collections.emptyList())){
-			dfs(graph, neighborVertex, visited, visiting);
-		}
-		visiting.add(src);
-	}
+  private char[] convertAndSend(LinkedList<Character> topList) {
+    char[] result = new char[topList.size()];
+    int index = 0;
+    for (char c : topList) {
+      result[index] = c;
+      index++;
+    }
+    return result;
+  }
 
-	private static void buildGraph(char[][] grid, Map<Character, List<Character>> graph) {
-		for(char[] edge : grid){
-			char src = edge[0];
-			char dest = edge[1];
-			graph.putIfAbsent(src, new ArrayList<>());
-			graph.get(src).add(dest);
-		}
-	}
+  private void dfs(Map<Character, List<Character>> graph, char vertex, Set<Character> visited, LinkedList<Character> topList) {
+    if (visited.contains(vertex)) return;
+    
+    visited.add(vertex);
+    for (char child : graph.getOrDefault(vertex, Collections.emptyList())) {
+      dfs(graph, child, visited, topList);
+    }
+    topList.addFirst(vertex);
+  }
 
-	public static void main(String[] args) {
-		    // src and dest
-		char[][] grid = {
-							{'A','D'}, 
-							{'E','A'},
-							{'E','D'},
-							{'E', 'F'},
-							{'C','A'},
-							{'C', 'B'},
-							{'B', 'D'},
-							{'D','H'},
-							{'D', 'G'},
-							{'F', 'K'},
-							{'F', 'J'},
-							{'K', 'J'},
-							{'H', 'J'},
-							{'H','I'},
-							{'J', 'M'},
-							{'J', 'L'},
-							{'M', 'E'}
-						};
-		System.out.println("Top Sort - " + Arrays.toString( topSort(grid, 13) ));
-	}
+  private Map<Character, List<Character>> buildGraph(char[][] grid) {
+    Map<Character, List<Character>> graph = new HashMap<Character, List<Character>>();
+    for (char[] edge : grid) {
+      char src = edge[0];
+      char dest = edge[1];
+      graph.putIfAbsent(src, new ArrayList<>());
+      graph.get(src).add(dest);
+    }
+    return graph;
+  }
 }
