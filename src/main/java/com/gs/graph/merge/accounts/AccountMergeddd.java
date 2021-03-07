@@ -1,8 +1,8 @@
-package com.gs.graph.unionfind;
+package com.gs.graph.merge.accounts;
 
 import java.util.*;
 
-public class AccountMerge {
+public class AccountMergeddd {
 
 	 public List<List<String>> accountsMerge(List<List<String>> accounts) {
 	        
@@ -62,10 +62,10 @@ public class AccountMerge {
 		List<List<String>> result = new ArrayList<List<String>>();
 		result.add(new ArrayList<String>(Arrays.asList("John", "johnsmith@mail.com", "john00@mail.com")));
 		result.add(new ArrayList<String>(Arrays.asList("John", "johnnybravo@mail.com")));
-		result.add(new ArrayList<String>(Arrays.asList("John", "johnsmith@mail.com", "john_newyork@mail.com")));
+		result.add(new ArrayList<String>(Arrays.asList("Johne", "johnsmith@mail.com", "john_newyork@mail.com")));
 		result.add(new ArrayList<String>(Arrays.asList("Mary", "mary@mail.com")));
 		
-		result = new AccountMerge().accountsMerge(result);
+		result = new AccountMergeddd().accountsMerge(result);
 		for(List<String> acc : result) {
 			System.out.println(acc);
 		}

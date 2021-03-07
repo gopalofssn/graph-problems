@@ -15,7 +15,7 @@ public class SentenceSimilarity {
 				graph.putIfAbsent(word, groupWords);
 			}
 		}
-		System.out.println("graph " + graph);
+		System.out.println("graph " + graph);dd
 		final int LEN = words1.length;
 		for(int i = 0; i < LEN; i++) {
 			String word1 = words1[i];

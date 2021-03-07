@@ -1,15 +1,15 @@
-package com.gs.merge.accounts;
+package com.gs.graph.merge.accounts;
 
 import java.util.*;
 
-public class AccountMerge {
+public class AccountMergeOl {
 
 
 	private static List<List<String>> mergeAccounts(List<List<String>> accounts) {
 		Map<String, String> emailNameMap = new HashMap<String, String>();
 		Map<String, Set<String>> graph = new HashMap<String, Set<String>>();
 		buildGraph(accounts, graph, emailNameMap);
-
+System.err.println(graph);
 		List<List<String>> mergedAccounts = new ArrayList<List<String>>();
 		Set<String> visitedEmails = new HashSet<String>();
 		for(Map.Entry<String, String> entry : emailNameMap.entrySet()){
